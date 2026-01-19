@@ -1,0 +1,310 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Job Scraper Control Panel</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,typography"></script>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet"/>
+<script>
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        primary: "#EB4425", 
+                        "background-light": "#F0F4F8",
+                        "background-dark": "#0f172a", // Deep charcoal/navy
+                        "panel-light": "#FFFFFF",
+                        "panel-dark": "rgba(30, 41, 59, 0.4)", // Glassmorphic translucent
+                        "text-light": "#4a5568",
+                        "text-dark": "#f8fafc", // High contrast white/off-white
+                        "accent-blue": "#6789BE",
+                        "neon-blue": "#00f0ff", // Neon accent
+                        "neon-green": "#39ff14", // Neon accent
+                    },
+                    fontFamily: {
+                        display: ["Outfit", "sans-serif"],
+                    },
+                    borderRadius: {
+                        DEFAULT: "1.5rem",
+                    },
+                    backdropBlur: {
+                        xs: '2px',
+                    }
+                },
+            },
+        };
+    </script>
+<style>
+        .glass-panel {
+            background: rgba(30, 41, 59, 0.7);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }::-webkit-scrollbar {
+            width: 6px;
+            background: transparent;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: rgba(156, 163, 175, 0.5);
+            border-radius: 3px;
+        }.dark .glass-card {
+            background: rgba(17, 24, 39, 0.6);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+        }.dark .neon-text {
+            text-shadow: 0 0 5px rgba(0, 240, 255, 0.5);
+        }
+    </style>
+</head>
+<body class="bg-background-light dark:bg-background-dark font-display antialiased h-screen overflow-hidden flex flex-col md:flex-row transition-colors duration-300">
+<div class="relative w-full md:w-5/12 h-48 md:h-full bg-cover bg-center overflow-hidden group" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuCF5YhKqlqshk7uO300lFu7aftYGb2O1L-PrtV-4qTPvfZO9DKHgUD2WYwwjsIFphVpksZBWf7-BoS3gkWvkUdYlSayGVgcHjGRV9qDNNT3WN14Fo5U9jCQ1ApodtTGNxJPyh3xQpmSGvztXDcYB4kSb0tb9CYbfSw_llR_3avbVyTmd3fQB0qjDlg-dRqj01ndLCkC7CFle3YVhTM2Vtv_Y55lEr9TLDnAu5D2zYIa6VS0sP1MVBOtGmbsQE8eYELiLebG8I4Zm2I');">
+<div class="absolute inset-0 bg-accent-blue/40 dark:bg-blue-950/80 mix-blend-multiply transition-colors duration-300"></div>
+<div class="absolute inset-0 bg-gradient-to-b from-transparent to-black/50 dark:to-black/80"></div>
+<div class="absolute inset-0 p-8 flex flex-col justify-between text-white z-10">
+<div class="flex items-center justify-between">
+<div class="flex items-center space-x-2">
+<span class="material-icons text-3xl text-white dark:text-neon-blue transition-colors">data_exploration</span>
+<h1 class="text-xl font-semibold tracking-wide">Scraper<span class="font-light opacity-80">OS</span></h1>
+</div>
+<div class="flex space-x-2 md:hidden">
+<button class="p-2 rounded-full hover:bg-white/10 transition text-white" onclick="document.documentElement.classList.toggle('dark')">
+<span class="material-icons text-xl">dark_mode</span>
+</button>
+<button class="p-2 rounded-full hover:bg-white/10 transition"><span class="material-icons text-xl">search</span></button>
+<button class="p-2 rounded-full hover:bg-white/10 transition"><span class="material-icons text-xl">menu</span></button>
+</div>
+</div>
+<div class="absolute top-1/2 left-8 transform -translate-y-1/2 md:translate-y-0 md:top-auto md:bottom-32 w-64 hidden md:block">
+<div class="glass-panel text-white p-6 rounded-3xl shadow-2xl transition-transform hover:scale-105 duration-300 dark:border-white/10 dark:bg-slate-900/60">
+<div class="flex justify-between items-center mb-4">
+<span class="text-sm font-medium opacity-80">System Status</span>
+<div class="flex items-center space-x-2 bg-yellow-400 dark:bg-neon-green/20 dark:border dark:border-neon-green/50 text-black dark:text-neon-green text-xs font-bold px-2 py-0.5 rounded-full transition-colors">
+<span class="w-1.5 h-1.5 bg-black dark:bg-neon-green rounded-full animate-pulse"></span>
+<span>Running</span>
+</div>
+</div>
+<div class="space-y-3 text-sm">
+<div class="flex justify-between items-center">
+<span class="opacity-60">Uptime</span>
+<span class="font-medium">14d 2h</span>
+</div>
+<div class="flex justify-between items-center">
+<span class="opacity-60">CPU Load</span>
+<span class="font-medium text-green-400 dark:text-neon-green">12%</span>
+</div>
+<div class="flex justify-between items-center">
+<span class="opacity-60">Proxies</span>
+<span class="font-medium text-blue-300 dark:text-neon-blue">Active</span>
+</div>
+<div class="flex justify-between items-center pt-2 border-t border-white/10">
+<span class="opacity-60">Queue</span>
+<span class="font-medium">Processing</span>
+</div>
+</div>
+<button class="absolute top-4 right-4 text-white/50 hover:text-white">
+<span class="material-icons text-sm">close</span>
+</button>
+</div>
+</div>
+<div class="mt-auto hidden md:block">
+<h2 class="text-4xl lg:text-5xl font-bold leading-tight mb-2 dark:text-white dark:drop-shadow-[0_0_10px_rgba(255,255,255,0.3)]">
+                Job Data <br/>
+                Extraction
+            </h2>
+<div class="flex items-center space-x-4 text-sm opacity-70">
+<span>Wed, 27th</span>
+<span class="w-1 h-1 bg-white rounded-full"></span>
+<span class="text-green-400 dark:text-neon-green">Now Online</span>
+</div>
+<div class="mt-8 flex items-center space-x-4 opacity-50 hover:opacity-100 transition">
+<button class="p-1 border border-white/30 rounded-full hover:bg-white/10"><span class="material-icons text-sm">chevron_left</span></button>
+<div class="h-0.5 w-24 bg-white/30 rounded-full overflow-hidden">
+<div class="h-full w-1/3 bg-white dark:bg-neon-blue dark:shadow-[0_0_8px_#00f0ff]"></div>
+</div>
+<button class="p-1 border border-white/30 rounded-full hover:bg-white/10"><span class="material-icons text-sm">chevron_right</span></button>
+</div>
+</div>
+<div class="absolute top-1/3 right-12 w-32 h-32 border border-white/20 rounded-full flex items-center justify-center opacity-60 md:opacity-100 dark:border-white/10">
+<div class="relative w-full h-full flex items-center justify-center">
+<span class="absolute top-2 right-4 text-xs font-bold text-yellow-400 dark:text-neon-blue">64</span>
+<div class="w-2 h-2 bg-yellow-400 dark:bg-neon-blue rounded-full absolute top-5 right-5 shadow-[0_0_10px_rgba(250,204,21,0.8)] dark:shadow-[0_0_10px_rgba(0,240,255,0.8)]"></div>
+<svg class="w-full h-full rotate-45 transform" viewBox="0 0 100 100">
+<circle cx="50" cy="50" fill="none" r="48" stroke="currentColor" stroke-dasharray="4 4" stroke-width="0.5"></circle>
+<path class="dark:stroke-neon-blue" d="M50 10 A 40 40 0 0 1 90 50" fill="none" stroke="white" stroke-width="1.5"></path>
+</svg>
+</div>
+</div>
+</div>
+</div>
+<div class="w-full md:w-7/12 h-full overflow-y-auto p-4 md:p-8 bg-background-light dark:bg-background-dark transition-colors duration-300 relative">
+<div class="fixed top-0 right-0 w-full h-full pointer-events-none overflow-hidden z-0 hidden dark:block">
+<div class="absolute -top-[20%] -right-[10%] w-[50%] h-[50%] bg-blue-900/20 rounded-full blur-[100px]"></div>
+<div class="absolute bottom-[10%] left-[10%] w-[40%] h-[40%] bg-indigo-900/20 rounded-full blur-[100px]"></div>
+</div>
+<div class="flex justify-between items-center mb-8 px-2 relative z-10">
+<div>
+<span class="text-xs font-bold text-accent-blue dark:text-neon-blue uppercase tracking-wider">Dashboard</span>
+<h3 class="text-2xl font-semibold text-text-light dark:text-text-dark">Control Center</h3>
+</div>
+<div class="flex items-center space-x-4">
+<button class="hidden md:flex p-2 rounded-full text-gray-400 hover:text-gray-600 dark:text-gray-300 dark:hover:text-white transition-colors hover:bg-gray-100 dark:hover:bg-white/10" onclick="document.documentElement.classList.toggle('dark')" title="Toggle Dark Mode">
+<span class="material-icons text-xl">dark_mode</span> 
+</button>
+<button class="hidden md:flex p-2 rounded-full text-gray-400 hover:text-gray-600 dark:text-gray-300 dark:hover:text-white transition-colors hover:bg-gray-100 dark:hover:bg-white/10">
+<span class="material-icons text-xl">search</span>
+</button>
+<div class="hidden md:flex flex-col items-end mr-2">
+<span class="text-sm font-semibold text-text-light dark:text-text-dark">Admin User</span>
+<span class="text-xs text-gray-500 dark:text-gray-400">Super Admin</span>
+</div>
+<img alt="User Avatar" class="w-10 h-10 rounded-full border-2 border-white dark:border-gray-600 shadow-sm" src="https://lh3.googleusercontent.com/aida-public/AB6AXuATtMQohjgXjHE0b2xPeXAJTpjT-K8opfSnTXS3-w_nCbNLUfgkz9vMio-anAVQfItWshKM5_mVeEdtS8Njn-iEA65GLnih-qVL5ssYFXjBAFzucRascTjXyxsVMbhIrMX4YCepZmEQTy7TwZLdxoxoUEV3z73CwtjmUn2VyGoVGv9Nokewnid_vIcOkRATRCDRqx1WQru6aDN-mApBa7Tm8Y5hLBIBQoEJC82V_-Nq6YwcBF-rJmDkeWg9TGi7aWkODyO_3BsG0OE"/>
+</div>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-4 lg:gap-6 h-auto relative z-10">
+<div class="col-span-1 md:col-span-2 bg-panel-light dark:glass-card p-6 rounded-DEFAULT shadow-sm border border-gray-100 dark:border-gray-700/50 flex flex-col justify-between transition-all duration-300">
+<div class="flex justify-between items-start mb-4">
+<div>
+<h4 class="text-gray-500 dark:text-gray-400 text-sm font-medium">Scraped Listings</h4>
+<div class="mt-1 flex items-baseline space-x-2">
+<span class="text-3xl font-bold text-text-light dark:text-text-dark">12,450</span>
+<span class="text-green-500 dark:text-neon-green text-xs font-semibold flex items-center"><span class="material-icons text-sm mr-0.5">arrow_upward</span> 15%</span>
+</div>
+</div>
+<div class="flex space-x-2">
+<span class="text-xs text-gray-400 dark:text-gray-500">Last 24h</span>
+</div>
+</div>
+<div class="h-32 w-full flex items-end justify-between space-x-1 sm:space-x-2 md:space-x-3 px-2">
+<div class="w-2 bg-gray-100 dark:bg-gray-700/50 rounded-t-sm h-[30%]"></div>
+<div class="w-2 bg-gray-100 dark:bg-gray-700/50 rounded-t-sm h-[45%]"></div>
+<div class="w-2 bg-gray-100 dark:bg-gray-700/50 rounded-t-sm h-[35%]"></div>
+<div class="w-2 bg-accent-blue/20 dark:bg-neon-blue/20 rounded-t-sm h-[50%]"></div>
+<div class="w-2 bg-accent-blue/30 dark:bg-neon-blue/30 rounded-t-sm h-[65%]"></div>
+<div class="w-2 bg-primary/60 dark:bg-primary/60 rounded-t-sm h-[80%]"></div>
+<div class="w-2 bg-primary dark:bg-primary rounded-t-sm h-[95%] shadow-[0_0_10px_rgba(235,68,37,0.4)] dark:shadow-[0_0_15px_rgba(235,68,37,0.6)]"></div>
+<div class="w-2 bg-primary/80 dark:bg-primary/80 rounded-t-sm h-[70%]"></div>
+<div class="w-2 bg-accent-blue/40 dark:bg-neon-blue/40 rounded-t-sm h-[60%]"></div>
+<div class="w-2 bg-accent-blue/20 dark:bg-neon-blue/20 rounded-t-sm h-[50%]"></div>
+<div class="w-2 bg-gray-100 dark:bg-gray-700/50 rounded-t-sm h-[40%]"></div>
+<div class="w-2 bg-gray-100 dark:bg-gray-700/50 rounded-t-sm h-[25%]"></div>
+<div class="w-2 bg-gray-100 dark:bg-gray-700/50 rounded-t-sm h-[35%]"></div>
+<div class="w-2 bg-gray-100 dark:bg-gray-700/50 rounded-t-sm h-[45%]"></div>
+<div class="w-2 bg-gray-100 dark:bg-gray-700/50 rounded-t-sm h-[55%]"></div>
+</div>
+<div class="flex justify-between mt-4 text-xs text-gray-400 dark:text-gray-500 font-medium">
+<span>Job Speed</span>
+<div class="flex items-center space-x-4">
+<span class="flex items-center"><span class="w-2 h-0.5 bg-gray-300 dark:bg-gray-600 mr-2"></span>idle</span>
+<span class="flex items-center"><span class="w-2 h-0.5 bg-primary mr-2"></span>active</span>
+</div>
+</div>
+</div>
+<div class="bg-panel-light dark:glass-card p-6 rounded-DEFAULT shadow-sm border border-gray-100 dark:border-gray-700/50 flex flex-col justify-center items-center text-center relative overflow-hidden group transition-all duration-300">
+<div class="absolute top-0 right-0 p-4 opacity-10 group-hover:opacity-20 transition-opacity">
+<span class="material-icons text-8xl text-primary transform rotate-12">touch_app</span>
+</div>
+<div class="z-10 w-full">
+<h4 class="text-gray-500 dark:text-gray-400 text-sm font-medium mb-1">Manual Override</h4>
+<p class="text-2xl font-bold text-text-light dark:text-text-dark mb-6">Run Scraper</p>
+<button class="relative w-full group py-4 px-6 rounded-xl bg-primary hover:bg-orange-600 dark:hover:bg-primary/90 text-white font-semibold shadow-lg shadow-primary/30 hover:shadow-primary/50 transition-all active:scale-95 flex items-center justify-center space-x-2">
+<span class="material-icons text-white animate-spin hidden group-hover:block" style="animation-duration: 2s;">sync</span>
+<span>Start Now</span>
+</button>
+<div class="mt-4 text-xs text-gray-400 dark:text-gray-500 flex items-center justify-center">
+<span class="w-1.5 h-1.5 bg-green-400 dark:bg-neon-green rounded-full mr-2 dark:shadow-[0_0_5px_rgba(57,255,20,0.8)]"></span>
+                    Ready to launch
+                </div>
+</div>
+</div>
+<div class="bg-panel-light dark:glass-card p-6 rounded-DEFAULT shadow-sm border border-gray-100 dark:border-gray-700/50 flex flex-col justify-between transition-all duration-300">
+<div>
+<h4 class="text-gray-500 dark:text-gray-400 text-sm font-medium mb-4">Daily Schedule</h4>
+<div class="flex items-center justify-between mb-6">
+<div class="flex flex-col">
+<span class="text-3xl font-light text-text-light dark:text-text-dark">04<span class="mx-1 text-gray-300 dark:text-gray-600">:</span>30</span>
+<span class="text-xs text-gray-400 dark:text-gray-500 uppercase tracking-widest mt-1 ml-1">AM UTC</span>
+</div>
+<label class="relative inline-flex items-center cursor-pointer">
+<input checked="" class="sr-only peer" type="checkbox" value=""/>
+<div class="w-14 h-7 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-primary/20 dark:peer-focus:ring-primary/30 rounded-full peer dark:bg-gray-700 peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-0.5 after:left-[4px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-6 after:w-6 after:transition-all dark:border-gray-600 peer-checked:bg-primary dark:peer-checked:bg-primary"></div>
+</label>
+</div>
+</div>
+<div class="space-y-4">
+<div class="relative pt-1">
+<div class="flex mb-2 items-center justify-between">
+<div class="text-xs text-gray-400 dark:text-gray-500">Next run in</div>
+<div class="text-xs font-semibold inline-block text-primary dark:text-primary">
+                            4h 12m
+                        </div>
+</div>
+<div class="overflow-hidden h-1.5 mb-1 text-xs flex rounded bg-primary/10 dark:bg-gray-700">
+<div class="shadow-none flex flex-col text-center whitespace-nowrap text-white justify-center bg-primary" style="width: 65%"></div>
+</div>
+</div>
+</div>
+</div>
+<div class="bg-panel-light dark:glass-card p-6 rounded-DEFAULT shadow-sm border border-gray-100 dark:border-gray-700/50 flex flex-col items-center justify-center transition-all duration-300">
+<h4 class="text-gray-500 dark:text-gray-400 text-sm font-medium w-full text-left mb-2">Success Rate</h4>
+<div class="relative w-40 h-40 flex items-center justify-center mt-2">
+<svg class="w-full h-full transform -rotate-90">
+<circle class="text-gray-100 dark:text-gray-700" cx="80" cy="80" fill="transparent" r="70" stroke="currentColor" stroke-width="8"></circle>
+<circle class="text-primary dark:text-primary drop-shadow-[0_0_2px_rgba(235,68,37,0.5)]" cx="80" cy="80" fill="transparent" r="70" stroke="currentColor" stroke-dasharray="440" stroke-dashoffset="44" stroke-linecap="round" stroke-width="8"></circle>
+</svg>
+<div class="absolute flex flex-col items-center justify-center text-text-light dark:text-text-dark">
+<span class="text-4xl font-light">92<span class="text-lg font-normal">%</span></span>
+<span class="text-xs text-gray-400 dark:text-gray-500 mt-1">Completion</span>
+</div>
+<div class="absolute w-3 h-3 bg-white border-2 border-primary rounded-full top-[18px] right-[40px] shadow-md dark:shadow-[0_0_10px_rgba(255,255,255,0.5)]"></div>
+</div>
+<button class="mt-6 px-4 py-1.5 bg-primary/10 text-primary text-xs font-semibold rounded-lg hover:bg-primary hover:text-white transition-colors dark:text-white dark:bg-primary/20 dark:hover:bg-primary">
+                View Logs
+            </button>
+</div>
+<div class="bg-panel-light dark:glass-card p-6 rounded-DEFAULT shadow-sm border border-gray-100 dark:border-gray-700/50 transition-all duration-300">
+<h4 class="text-gray-500 dark:text-gray-400 text-sm font-medium mb-6">Data Sources</h4>
+<div class="space-y-6">
+<div>
+<div class="flex justify-between items-end mb-1">
+<span class="text-sm font-medium text-text-light dark:text-text-dark">LinkedIn</span>
+<span class="text-xs text-gray-400 dark:text-gray-500">4,200 records</span>
+</div>
+<div class="w-full bg-gray-100 dark:bg-gray-700 rounded-full h-2">
+<div class="bg-blue-600 dark:bg-blue-500 dark:shadow-[0_0_5px_rgba(59,130,246,0.5)] h-2 rounded-full" style="width: 70%"></div>
+</div>
+</div>
+<div>
+<div class="flex justify-between items-end mb-1">
+<span class="text-sm font-medium text-text-light dark:text-text-dark">Indeed</span>
+<span class="text-xs text-gray-400 dark:text-gray-500">1,850 records</span>
+</div>
+<div class="w-full bg-gray-100 dark:bg-gray-700 rounded-full h-2">
+<div class="bg-blue-400 dark:bg-neon-blue dark:shadow-[0_0_5px_rgba(0,240,255,0.5)] h-2 rounded-full" style="width: 45%"></div>
+</div>
+</div>
+<div>
+<div class="flex justify-between items-end mb-1">
+<span class="text-sm font-medium text-text-light dark:text-text-dark">Glassdoor</span>
+<span class="text-xs text-gray-400 dark:text-gray-500">890 records</span>
+</div>
+<div class="w-full bg-gray-100 dark:bg-gray-700 rounded-full h-2">
+<div class="bg-green-400 dark:bg-neon-green dark:shadow-[0_0_5px_rgba(57,255,20,0.5)] h-2 rounded-full" style="width: 25%"></div>
+</div>
+</div>
+</div>
+<div class="mt-6 pt-4 border-t border-gray-100 dark:border-gray-700/50 flex justify-between items-center">
+<span class="text-xs text-gray-400 dark:text-gray-500">Total: 3 Sources</span>
+<button class="p-1.5 rounded-md hover:bg-gray-100 dark:hover:bg-white/10 text-primary transition">
+<span class="material-icons text-lg">settings</span>
+</button>
+</div>
+</div>
+</div>
+</div>
+
+</body></html>

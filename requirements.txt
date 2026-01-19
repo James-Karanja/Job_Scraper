@@ -1,0 +1,9 @@
+apify-client
+pandas
+gspread
+google-auth
+python-dotenv
+openai
+fastapi
+uvicorn
+python-multipart
