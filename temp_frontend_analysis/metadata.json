@@ -1,0 +1,5 @@
+{
+  "name": "ScraperOS Control Panel",
+  "description": "A modern, responsive control dashboard for a job scraping bot featuring real-time statistics, scheduling controls, and data source monitoring.",
+  "requestFramePermissions": []
+}
